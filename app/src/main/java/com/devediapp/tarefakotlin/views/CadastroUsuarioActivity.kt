@@ -1,8 +1,10 @@
-package com.devediapp.tarefakotlin
+package com.devediapp.tarefakotlin.views
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import com.devediapp.tarefakotlin.R
+import com.devediapp.tarefakotlin.repository.UserRepository
 import kotlinx.android.synthetic.main.activity_cadastro_usuario.*
 
 class CadastroUsuarioActivity : AppCompatActivity(), View.OnClickListener {
@@ -13,6 +15,7 @@ class CadastroUsuarioActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_cadastro_usuario)
 
         setLiners()
+        UserRepository.getInstance(this)
     }
 
     private fun setLiners(){
