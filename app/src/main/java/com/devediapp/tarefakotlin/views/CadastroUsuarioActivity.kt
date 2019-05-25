@@ -45,6 +45,7 @@ class CadastroUsuarioActivity : AppCompatActivity(), View.OnClickListener {
                 editPasswordCadastroUsuario.text.toString())
 
             user.idUser = mUserBusiness.insertUser(user)
+            Toast.makeText(applicationContext, getString(R.string.cadastro_sucesso), Toast.LENGTH_LONG).show()
         }catch (e: ValidationException){
             Toast.makeText(applicationContext, e.message, Toast.LENGTH_LONG).show()
         }catch (e: Exception){

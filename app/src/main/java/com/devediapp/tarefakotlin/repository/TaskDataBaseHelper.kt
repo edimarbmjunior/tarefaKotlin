@@ -11,7 +11,7 @@ class TaskDataBaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
     //Integer, Real, Text, Blob
 
     companion object{//Dessa forma coloco as variaveis estaticas
-        private val DATABASE_VERSION: Int = 2
+        private val DATABASE_VERSION: Int = 1
         private val DATABASE_NAME: String = "tarefas.db"
     }
 
@@ -39,16 +39,20 @@ class TaskDataBaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
         when(oldVersion){
             1 -> {
                 sqlLite.execSQL(deleteTableUser)
-                sqlLite.execSQL(deleteTableUser)
+                sqlLite.execSQL(createTableUser)
                 println("Rodar atualização da 1 para 2")
                 println("Rodar atualização da 2 para 3")
                 println("Rodar atualização da 3 para 4")
             }
             2 -> {
+                sqlLite.execSQL(deleteTableUser)
+                sqlLite.execSQL(createTableUser)
                 println("Rodar atualização da 2 para 3")
                 println("Rodar atualização da 3 para 4")
             }
             3 -> {
+                sqlLite.execSQL(deleteTableUser)
+                sqlLite.execSQL(createTableUser)
                 println("Rodar atualização da 3 para 4")
             }
         }
