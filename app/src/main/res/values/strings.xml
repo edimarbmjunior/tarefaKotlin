@@ -17,4 +17,6 @@
     <string name="e_mail">E-mail</string>
     <string name="senha">Senha</string>
     <string name="cadastrar">Cadastrar</string>
+    <string name="informe_dados_corretamente">Informe os dados corretamente!</string>
+    <string name="erro_generico">Algo de errado aconteceu! Tente Novamente!</string>
 </resources>

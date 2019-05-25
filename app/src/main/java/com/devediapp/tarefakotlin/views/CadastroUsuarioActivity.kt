@@ -3,19 +3,26 @@ package com.devediapp.tarefakotlin.views
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import com.devediapp.tarefakotlin.R
+import com.devediapp.tarefakotlin.business.UserBusiness
+import com.devediapp.tarefakotlin.entity.User
 import com.devediapp.tarefakotlin.repository.UserRepository
+import com.devediapp.tarefakotlin.util.ValidationException
 import kotlinx.android.synthetic.main.activity_cadastro_usuario.*
+import java.lang.Exception
 
 class CadastroUsuarioActivity : AppCompatActivity(), View.OnClickListener {
 
+    //Não pode ser instanciado antes da execução do "onCreate()" da activity
+    private lateinit var mUserBusiness : UserBusiness
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cadastro_usuario)
 
         setLiners()
-        UserRepository.getInstance(this)
+        mUserBusiness = UserBusiness(application)
     }
 
     private fun setLiners(){
@@ -31,6 +38,17 @@ class CadastroUsuarioActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun handleSave(){
+        try {
+            val user : User = User(0,
+                editNomeCadastroUsuario.text.toString(),
+                editEmailCadastroUsuario.text.toString(),
+                editPasswordCadastroUsuario.text.toString())
 
+            user.idUser = mUserBusiness.insertUser(user)
+        }catch (e: ValidationException){
+            Toast.makeText(applicationContext, e.message, Toast.LENGTH_LONG).show()
+        }catch (e: Exception){
+            Toast.makeText(applicationContext, getString(R.string.erro_generico), Toast.LENGTH_LONG).show()
+        }
     }
 }
