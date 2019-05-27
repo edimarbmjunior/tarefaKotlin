@@ -40,7 +40,7 @@ class UserRepository private constructor(context: Context){
 
     fun buscaEmail(email:String) : Boolean{
 
-        var ret = false
+        var ret : Boolean
         try{
             val cursor: Cursor
             val db = mTaskDataBaseHelper.readableDatabase

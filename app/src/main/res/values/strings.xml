@@ -15,7 +15,6 @@
     <string name="menu_send">Send</string>
     <string name="nome">Nome</string>
     <string name="e_mail">E-mail</string>
-    <string name="senha">Senha</string>
     <string name="cadastrar">Cadastrar</string>
     <string name="informe_dados_corretamente">Informe os dados corretamente!</string>
     <string name="email_existe">E-mail já está em uso!</string>
@@ -24,4 +23,5 @@
     <string name="usuario_invalido">Usuário inválido!</string>
     <string name="entrar">Entrar</string>
     <string name="usuario_senha_incorreto">Usuário e/ou senha incorretos!</string>
+    <string name="senha">Senha</string>
 </resources>

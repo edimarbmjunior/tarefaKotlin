@@ -1,5 +1,6 @@
 package com.devediapp.tarefakotlin.views
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
@@ -9,9 +10,12 @@ import android.support.design.widget.NavigationView
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import com.devediapp.tarefakotlin.R
+import com.devediapp.tarefakotlin.contants.TarefasConstants
+import com.devediapp.tarefakotlin.util.SecurityPreferences
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
+    private lateinit var mSecurityPreferences : SecurityPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +39,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
 
         navView.setNavigationItemSelectedListener(this)
+
+        mSecurityPreferences = SecurityPreferences(this)
     }
 
     override fun onBackPressed() {
@@ -73,7 +79,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             }
             R.id.nav_logout -> {
-
+                fazerLogout()
             }
             /*R.id.nav_tools -> {
 
@@ -88,5 +94,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    private fun fazerLogout(){
+
+        //Apagar dados da memoria
+        mSecurityPreferences.removerStoredString(TarefasConstants.KEY.USER_NOME)
+        mSecurityPreferences.removerStoredString(TarefasConstants.KEY.USER_EMAIL)
+        mSecurityPreferences.removerStoredString(TarefasConstants.KEY.USER_ID)
+
+        startActivity(Intent(this, LoginActivity::class.java))
     }
 }

@@ -11,6 +11,8 @@ import com.devediapp.tarefakotlin.contants.TarefasConstants
 import com.devediapp.tarefakotlin.util.SecurityPreferences
 import kotlinx.android.synthetic.main.activity_login.*
 
+
+
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var mUserBusiness: UserBusiness

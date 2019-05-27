@@ -16,7 +16,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:gravity="center"
-            android:hint="@string/nome"
+            android:hint="@string/e_mail"
     />
 
     <EditText
@@ -27,7 +27,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editLoginEmail"
             android:gravity="center"
-            android:hint="@string/e_mail"
+            android:hint="@string/senha"
             android:inputType="textEmailAddress"
     />
 
@@ -51,8 +51,6 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/buttonLoginUsuario"
             android:layout_marginTop="2.5mm"
-            android:autoLink="all"
-            android:clickable="true"
     />
 
 </android.support.constraint.ConstraintLayout>
