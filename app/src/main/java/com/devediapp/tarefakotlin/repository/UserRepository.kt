@@ -82,7 +82,7 @@ class UserRepository private constructor(context: Context){
                 val userId = cursor.getInt(cursor.getColumnIndex(DataBaseContants.USER.COLUMNS.ID))
                 val nome  = cursor.getString(cursor.getColumnIndex(DataBaseContants.USER.COLUMNS.NOME))
                 val email = cursor.getString(cursor.getColumnIndex(DataBaseContants.USER.COLUMNS.EMAIL))
-                val senha = cursor.getString(cursor.getColumnIndex(DataBaseContants.USER.COLUMNS.SENHA))
+                //val senha = cursor.getString(cursor.getColumnIndex(DataBaseContants.USER.COLUMNS.SENHA))
 
                 mUserEntity = UserEntity(userId, nome, email)
             }

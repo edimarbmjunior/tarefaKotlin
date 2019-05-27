@@ -1,5 +1,6 @@
 package com.devediapp.tarefakotlin.views
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -45,6 +46,9 @@ class CadastroUsuarioActivity : AppCompatActivity(), View.OnClickListener {
 
             userEntity.idUser = mUserBusiness.insertUser(userEntity)
             Toast.makeText(applicationContext, getString(R.string.cadastro_sucesso), Toast.LENGTH_LONG).show()
+
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
         }catch (e: ValidationException){
             Toast.makeText(applicationContext, e.message, Toast.LENGTH_LONG).show()
         }catch (e: Exception){

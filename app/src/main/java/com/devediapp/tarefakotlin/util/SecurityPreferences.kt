@@ -7,11 +7,11 @@ class SecurityPreferences(context: Context) {
 
     private val mSharedPreferences : SharedPreferences = context.getSharedPreferences("tarefas", Context.MODE_PRIVATE)
 
-    fun storeString(key: String, value: String){
+    fun salvarString(key: String, value: String){
         mSharedPreferences.edit().putString(key, value).apply()
     }
 
-    fun getStoredString(key: String) : String{
+    fun getRecuperarStringString(key: String) : String{
         return mSharedPreferences.getString(key, "")
     }
 

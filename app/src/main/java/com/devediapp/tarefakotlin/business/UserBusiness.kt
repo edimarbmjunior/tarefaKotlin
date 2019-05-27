@@ -28,26 +28,29 @@ class UserBusiness (private val context: Context){
             userEntity.idUser = mUserRepository.insertUser(userEntity)
 
             //Salvar dados do usuario na shared
-            mSecurityPreferences.storeString(TarefasConstants.KEY.USER_ID, userEntity.idUser.toString())
-            mSecurityPreferences.storeString(TarefasConstants.KEY.USER_EMAIL, userEntity.email)
-            mSecurityPreferences.storeString(TarefasConstants.KEY.USER_NOME, userEntity.nome)
+            mSecurityPreferences.salvarString(TarefasConstants.KEY.USER_ID, userEntity.idUser.toString())
+            mSecurityPreferences.salvarString(TarefasConstants.KEY.USER_EMAIL, userEntity.email)
+            mSecurityPreferences.salvarString(TarefasConstants.KEY.USER_NOME, userEntity.nome)
         }catch (e: Exception){
             throw e
         }
         return userEntity.idUser
     }
 
-    fun login(email: String, senha: String){
+    fun login(email: String, senha: String):Boolean{
 
         //Ponto de interrogação para dizer que na variavel é permitido nulo.
         val mUserEntity : UserEntity? = mUserRepository.get(email, senha)
-        if(mUserEntity != null){
+        return if(mUserEntity != null){
             //Salvar dados do usuario na shared
-            mSecurityPreferences.storeString(TarefasConstants.KEY.USER_ID, mUserEntity.idUser.toString())
-            mSecurityPreferences.storeString(TarefasConstants.KEY.USER_EMAIL, mUserEntity.email)
-            mSecurityPreferences.storeString(TarefasConstants.KEY.USER_NOME, mUserEntity.nome)
+            mSecurityPreferences.salvarString(TarefasConstants.KEY.USER_ID, mUserEntity.idUser.toString())
+            mSecurityPreferences.salvarString(TarefasConstants.KEY.USER_EMAIL, mUserEntity.email)
+            mSecurityPreferences.salvarString(TarefasConstants.KEY.USER_NOME, mUserEntity.nome)
+            //Retorna true
+            true
         }else{
-            throw ValidationException(context.getString(R.string.usuario_invalido))
+            //Retorna false
+            false
         }
 
     }
