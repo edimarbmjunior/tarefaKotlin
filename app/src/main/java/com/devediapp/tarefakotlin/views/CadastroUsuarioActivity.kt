@@ -6,8 +6,7 @@ import android.view.View
 import android.widget.Toast
 import com.devediapp.tarefakotlin.R
 import com.devediapp.tarefakotlin.business.UserBusiness
-import com.devediapp.tarefakotlin.entity.User
-import com.devediapp.tarefakotlin.repository.UserRepository
+import com.devediapp.tarefakotlin.entity.UserEntity
 import com.devediapp.tarefakotlin.util.ValidationException
 import kotlinx.android.synthetic.main.activity_cadastro_usuario.*
 import java.lang.Exception
@@ -39,12 +38,12 @@ class CadastroUsuarioActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun handleSave(){
         try {
-            val user : User = User(0,
+            val userEntity : UserEntity = UserEntity(0,
                 editNomeCadastroUsuario.text.toString(),
                 editEmailCadastroUsuario.text.toString(),
                 editPasswordCadastroUsuario.text.toString())
 
-            user.idUser = mUserBusiness.insertUser(user)
+            userEntity.idUser = mUserBusiness.insertUser(userEntity)
             Toast.makeText(applicationContext, getString(R.string.cadastro_sucesso), Toast.LENGTH_LONG).show()
         }catch (e: ValidationException){
             Toast.makeText(applicationContext, e.message, Toast.LENGTH_LONG).show()
