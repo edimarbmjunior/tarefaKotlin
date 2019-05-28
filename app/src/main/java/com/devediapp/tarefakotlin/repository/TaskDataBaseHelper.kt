@@ -24,19 +24,51 @@ class TaskDataBaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
        );
     """
 
+    private val createTablePrioridade = """
+       CREATE TABLE ${DataBaseContants.PRIORIDADE.TABLE_NAME} (
+            ${DataBaseContants.PRIORIDADE.COLUMNS.ID} INTEGER PRIMARY KEY,
+            ${DataBaseContants.PRIORIDADE.COLUMNS.DESCRICAO} TEXT
+       );
+    """
+
+    private val createTableTarefa = """
+       CREATE TABLE ${DataBaseContants.TAREFA.TABLE_NAME} (
+            ${DataBaseContants.TAREFA.COLUMNS.ID} INTEGER PRIMARY KEY AUTOINCREMENT,
+            ${DataBaseContants.TAREFA.COLUMNS.FK_USER_ID} INTEGER,
+            ${DataBaseContants.TAREFA.COLUMNS.FK_PRIORIDADE_ID} INTEGER,
+            ${DataBaseContants.TAREFA.COLUMNS.DESCRICAO} TEXT,
+            ${DataBaseContants.TAREFA.COLUMNS.STATUS} INTEGER,
+            ${DataBaseContants.TAREFA.COLUMNS.DATA_VENCIMENTO} TEXT
+       );
+    """
+
+    private val insertPrioridade = """INSERT INTO ${DataBaseContants.PRIORIDADE.TABLE_NAME}
+        VALUES (1, 'Baixa'), (2, 'Média'), (3, 'Alta'), (4, 'Critica')"""
+
     private val deleteTableUser = """drop table if exists ${DataBaseContants.USER.TABLE_NAME};"""
+    private val deleteTablePrioridade = """drop table if exists ${DataBaseContants.PRIORIDADE.TABLE_NAME};"""
+    private val deleteTableTarefa = """drop table if exists ${DataBaseContants.TAREFA.TABLE_NAME};"""
 
     override fun onCreate(sqlLite: SQLiteDatabase) {
         //Roda essa função na instalção do aplicativo
         sqlLite.execSQL(createTableUser)
+        sqlLite.execSQL(createTablePrioridade)
+        sqlLite.execSQL(createTableTarefa)
+        sqlLite.execSQL(insertPrioridade)
     }
 
     override fun onUpgrade(sqlLite: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         //Aqui quando tem uma atualização no aplicativo roda essa função
-        /*sqlLite.execSQL(deleteTableUser)
-        sqlLite.execSQL(createTableUser)*/
+        sqlLite.execSQL(deleteTableUser)
+        sqlLite.execSQL(deleteTablePrioridade)
+        sqlLite.execSQL(deleteTableTarefa)
 
-        when(oldVersion){
+        sqlLite.execSQL(createTableUser)
+        sqlLite.execSQL(createTablePrioridade)
+        sqlLite.execSQL(createTableTarefa)
+        sqlLite.execSQL(insertPrioridade)
+
+        /*when(oldVersion){
             1 -> {
                 sqlLite.execSQL(deleteTableUser)
                 sqlLite.execSQL(createTableUser)
@@ -55,6 +87,6 @@ class TaskDataBaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
                 sqlLite.execSQL(createTableUser)
                 println("Rodar atualização da 3 para 4")
             }
-        }
+        }*/
     }
 }

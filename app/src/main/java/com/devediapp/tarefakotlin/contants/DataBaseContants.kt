@@ -12,4 +12,26 @@ class DataBaseContants {
             val SENHA = "senha"
         }
     }
+
+    object PRIORIDADE{
+        val TABLE_NAME = "prioridade"
+
+        object COLUMNS{
+            val ID = "idPrioridade"
+            val DESCRICAO = "descricao"
+        }
+    }
+
+    object TAREFA{
+        val TABLE_NAME = "tarefa"
+
+        object COLUMNS{
+            val ID = "idTarefa"
+            val FK_USER_ID = "fkIdUser"
+            val FK_PRIORIDADE_ID = "fkIdPrioridade"
+            val DESCRICAO = "descricao"
+            val STATUS = "status"
+            val DATA_VENCIMENTO = "dataVencimento"
+        }
+    }
 }
