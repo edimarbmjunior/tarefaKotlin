@@ -11,7 +11,7 @@ class TaskDataBaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
     //Integer, Real, Text, Blob
 
     companion object{//Dessa forma coloco as variaveis estaticas
-        private val DATABASE_VERSION: Int = 1
+        private val DATABASE_VERSION: Int = 2
         private val DATABASE_NAME: String = "tarefas.db"
     }
 

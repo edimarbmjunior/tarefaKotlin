@@ -13,7 +13,7 @@ class TarefaBusiness (private val context: Context) {
 
     fun getList(userId: Int) : MutableCollection<TarefaEntity> = mTarefaRepository.getList(userId)
 
-    fun insertTarefa(tarefaEntity: TarefaEntity) : TarefaEntity{
+    fun insertTarefa(tarefaEntity: TarefaEntity) : TarefaEntity {
 
         try {
             if(tarefaEntity.descricao.isNullOrBlank()
