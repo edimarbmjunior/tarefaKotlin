@@ -60,20 +60,32 @@ class ListaTarefaFragment : Fragment(), View.OnClickListener {
         //Primeiro passo do RecyclerView
         mRecyclerView = rootView.findViewById(R.id.recycleListaTarefa)
 
-        val listaTarefas = mTarefaBusiness.getList(mSecurityPreferences.getRecuperarString(TarefasConstants.KEY.USER_ID).toInt())
+        //val listaTarefas = mTarefaBusiness.getList(mSecurityPreferences.getRecuperarString(TarefasConstants.KEY.USER_ID).toInt())
+        //OU
+        //val fkIdUser = mSecurityPreferences.getRecuperarString(TarefasConstants.KEY.USER_ID).toInt()
+        //val listaTarefas = mTarefaBusiness.getList(fkIdUser)
+
+        //Mock abaixo foi comentado
         /*for(i in 0..50){
             if(listaTarefas.size==0){
                 listaTarefas.add(TarefaEntity(0, 0, 1, "Sem descrição", "XX/XX/XXXX", false))
             }
             listaTarefas.add(listaTarefas[0].copy(descricao = listaTarefas[0].descricao + " - $i", id = i+2))
         }*/
+
         //Segundo passo
-        mRecyclerView.adapter = ListaTarefaAdapter(listaTarefas)
+        //mRecyclerView.adapter = ListaTarefaAdapter(listaTarefas)
+        mRecyclerView.adapter = ListaTarefaAdapter(mutableListOf())
 
         //Terceiro passo
         mRecyclerView.layoutManager = LinearLayoutManager(mContext)
 
         return rootView
+    }
+
+    override fun onResume() {
+        super.onResume()
+        carregaTarefas()
     }
 
     override fun onClick(view: View) {
@@ -82,5 +94,10 @@ class ListaTarefaFragment : Fragment(), View.OnClickListener {
                 startActivity(Intent(mContext, FormularioTarefaInclusaoActivity::class.java))
             }
         }
+    }
+
+    private fun carregaTarefas(){
+        //val listaTarefas = mTarefaBusiness.getList()
+        mRecyclerView.adapter = ListaTarefaAdapter(mTarefaBusiness.getList())
     }
 }

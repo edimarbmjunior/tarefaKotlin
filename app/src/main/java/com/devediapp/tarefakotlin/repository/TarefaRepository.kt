@@ -36,10 +36,12 @@ class TarefaRepository private constructor(context: Context){
             val cursor: Cursor
             val db = mTaskDataBaseHelper.readableDatabase
 
+            val query = """SELECT * FROM ${DataBaseContants.TAREFA.TABLE_NAME}
+                        WHERE ${DataBaseContants.TAREFA.COLUMNS.FK_USER_ID} = $userId
+                        ORDER BY ${DataBaseContants.TAREFA.COLUMNS.ID} """
+
             cursor = db.rawQuery(
-                "SELECT * FROM ${DataBaseContants.TAREFA.TABLE_NAME}" +
-                        "WHERE ${DataBaseContants.TAREFA.COLUMNS.FK_USER_ID} = $userId" +
-                        "ORDER BY ${DataBaseContants.TAREFA.COLUMNS.ID} ", null
+                query, null
             )
 
             if (cursor.count > 0) {

@@ -14,6 +14,7 @@ import com.devediapp.tarefakotlin.contants.TarefasConstants
 import com.devediapp.tarefakotlin.entity.PrioridadeEntity
 import com.devediapp.tarefakotlin.entity.TarefaEntity
 import com.devediapp.tarefakotlin.util.SecurityPreferences
+import com.devediapp.tarefakotlin.util.ValidationException
 import kotlinx.android.synthetic.main.activity_formulario_tarefa_inclusao.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -37,6 +38,7 @@ class FormularioTarefaInclusaoActivity : AppCompatActivity(), View.OnClickListen
         mSecurityPreferences = SecurityPreferences(this)
 
         carregaListaPrioridades()
+        //inicializarCampos()
         setListeners()
     }
 
@@ -102,12 +104,26 @@ class FormularioTarefaInclusaoActivity : AppCompatActivity(), View.OnClickListen
 
             tarefaEntity = mTarefaBusiness.insertTarefa(tarefaEntity)
 
-            Toast.makeText(this, getString(R.string.cadastro_sucesso), Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.cadastro_sucesso) + " Tarefa de número ${tarefaEntity.id} realizada!", Toast.LENGTH_LONG).show()
             finish()
 
+        }catch (mValidationException : ValidationException){
+            Toast.makeText(this, mValidationException.message, Toast.LENGTH_LONG).show()
         }catch (e : Exception){
             Toast.makeText(this, getString(R.string.erro_generico), Toast.LENGTH_LONG).show()
         }
+    }
 
+    private fun inicializarCampos(){
+        val cal = Calendar.getInstance()
+        val ano = cal.get(Calendar.YEAR)
+        val mes = cal.get(Calendar.MONTH)
+        val dia = cal.get(Calendar.DAY_OF_MONTH)
+
+        val mesAjustado = if(mes.toString().toInt() < 10) "0"+mes.toString() else mes.toString()
+
+        val incializarData = dia.toString() + "/" + mesAjustado + "/" + ano.toString()
+
+        buttonIncluirTarefaData.text = incializarData
     }
 }
