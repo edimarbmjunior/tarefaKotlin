@@ -63,8 +63,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun validaUsuarioLogado(){
 
-        val idUser = mSecurityPreferences.getRecuperarStringString(TarefasConstants.KEY.USER_ID)
-        val senha = mSecurityPreferences.getRecuperarStringString(TarefasConstants.KEY.USER_NOME)
+        val idUser = mSecurityPreferences.getRecuperarString(TarefasConstants.KEY.USER_ID)
+        val senha = mSecurityPreferences.getRecuperarString(TarefasConstants.KEY.USER_NOME)
         if(!idUser.isNullOrEmpty() && !senha.isNullOrEmpty()){
             startActivity(Intent(this, MainActivity::class.java))
             finish()

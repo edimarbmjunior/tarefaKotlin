@@ -11,7 +11,7 @@ class TarefaBusiness (private val context: Context) {
 
     private val mTarefaRepository: TarefaRepository = TarefaRepository.getInstance(context)
 
-    fun getList(userId: Int) : MutableCollection<TarefaEntity> = mTarefaRepository.getList(userId)
+    fun getList(userId: Int) : MutableList<TarefaEntity> = mTarefaRepository.getList(userId)
 
     fun insertTarefa(tarefaEntity: TarefaEntity) : TarefaEntity {
 

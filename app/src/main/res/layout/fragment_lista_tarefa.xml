@@ -5,10 +5,11 @@
              android:layout_height="match_parent"
              tools:context=".views.ListaTarefaFragment">
 
-    <TextView
+    <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycleListaTarefa"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment"/>
+    />
 
     <android.support.design.widget.FloatingActionButton
             android:id="@+id/floatingNovaTarefa"

@@ -11,7 +11,7 @@ class SecurityPreferences(context: Context) {
         mSharedPreferences.edit().putString(key, value).apply()
     }
 
-    fun getRecuperarStringString(key: String) : String{
+    fun getRecuperarString(key: String) : String{
         return mSharedPreferences.getString(key, "")
     }
 

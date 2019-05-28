@@ -96,13 +96,14 @@ class FormularioTarefaInclusaoActivity : AppCompatActivity(), View.OnClickListen
             val prioridadeId =  mListPrioridadeId[spinnerIncluirTarefaDescricao.selectedItemPosition]
             val status = checkIncluirTarefaCompleto.isChecked
             val dataVencimento = buttonIncluirTarefaData.text.toString()
-            val usuarioId = mSecurityPreferences.getRecuperarStringString(TarefasConstants.KEY.USER_ID).toInt()
+            val usuarioId = mSecurityPreferences.getRecuperarString(TarefasConstants.KEY.USER_ID).toInt()
 
             var tarefaEntity = TarefaEntity(0, usuarioId, prioridadeId, descricao, dataVencimento, status)
 
             tarefaEntity = mTarefaBusiness.insertTarefa(tarefaEntity)
 
             Toast.makeText(this, getString(R.string.cadastro_sucesso), Toast.LENGTH_LONG).show()
+            finish()
 
         }catch (e : Exception){
             Toast.makeText(this, getString(R.string.erro_generico), Toast.LENGTH_LONG).show()

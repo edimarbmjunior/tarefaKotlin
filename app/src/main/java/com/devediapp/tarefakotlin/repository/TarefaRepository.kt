@@ -29,7 +29,7 @@ class TarefaRepository private constructor(context: Context){
         private var INSTANCE : TarefaRepository? = null
     }
 
-    fun getList(userId: Int) : MutableCollection<TarefaEntity> {
+    fun getList(userId: Int) : MutableList<TarefaEntity> {
         val list = mutableListOf<TarefaEntity>()
         try {
 
@@ -94,7 +94,7 @@ class TarefaRepository private constructor(context: Context){
             }
             cursor.close()
         }catch (e: Exception){
-            mTarefaEntity
+            throw e
         }
 
         return mTarefaEntity
