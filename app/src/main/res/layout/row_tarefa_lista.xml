@@ -1,15 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:layout_gravity="center_horizontal">
+              android:layout_gravity="center_horizontal"
+              android:padding="2mm">
+
+    <ImageView
+            android:id="@+id/imageRowLista"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_nao_concluido"
+            android:layout_centerVertical="true"
+    />
 
     <TextView
-            android:id="@+id/textRowLista"
+            android:id="@+id/textRowListaDescricao"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Descrição"
+            android:layout_toRightOf="@+id/imageRowLista"
+            android:layout_marginLeft="2mm"
     />
 
-</LinearLayout>
+    <TextView
+            android:id="@+id/textRowListaPrioridade"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1.5mm"
+            android:text="Prioridade"
+            android:layout_toRightOf="@+id/imageRowLista"
+            android:layout_marginLeft="2mm"
+            android:layout_below="@+id/textRowListaDescricao"
+    />
+
+    <TextView
+            android:id="@+id/textRowListaDataVencimento"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Data"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_above="@+id/viewRowLista"
+    />
+
+    <View
+            android:id="@+id/viewRowLista"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="1mm"
+            android:layout_below="@+id/textRowListaPrioridade"
+            android:background="#ececec"
+    />
+
+</RelativeLayout>
