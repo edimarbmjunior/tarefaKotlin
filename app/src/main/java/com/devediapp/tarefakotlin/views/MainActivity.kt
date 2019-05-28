@@ -11,12 +11,15 @@ import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import com.devediapp.tarefakotlin.R
+import com.devediapp.tarefakotlin.business.PrioridadeBusiness
 import com.devediapp.tarefakotlin.contants.TarefasConstants
+import com.devediapp.tarefakotlin.repository.PrioridadeCacheConstantes
 import com.devediapp.tarefakotlin.util.SecurityPreferences
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var mSecurityPreferences : SecurityPreferences
+    private lateinit var mPrioridadeBusiness : PrioridadeBusiness
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +45,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navView.setNavigationItemSelectedListener(this)
 
         mSecurityPreferences = SecurityPreferences(this)
+        mPrioridadeBusiness = PrioridadeBusiness(this)
 
+        armazenarCachePrioridade()
         startDeafultFragment()
     }
 
@@ -113,5 +118,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         mSecurityPreferences.removerStoredString(TarefasConstants.KEY.USER_ID)
 
         startActivity(Intent(this, LoginActivity::class.java))
+    }
+
+    private fun armazenarCachePrioridade(){
+        PrioridadeCacheConstantes.setCahe(mPrioridadeBusiness.getList())
     }
 }

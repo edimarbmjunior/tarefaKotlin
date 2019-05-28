@@ -6,6 +6,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.devediapp.tarefakotlin.R
 import com.devediapp.tarefakotlin.entity.TarefaEntity
+import com.devediapp.tarefakotlin.repository.PrioridadeCacheConstantes
 
 class TarefaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -16,7 +17,7 @@ class TarefaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun bindDados(tarefa: TarefaEntity){
         mDescricao.text = tarefa.descricao
-        mPrioridade.text = ""
+        mPrioridade.text = PrioridadeCacheConstantes.getPrioridadeDescricao(tarefa.fkIdPrioridade)
         mDataVencimento.text = tarefa.dataVencimento
 
         if(tarefa.status){

@@ -61,12 +61,12 @@ class ListaTarefaFragment : Fragment(), View.OnClickListener {
         mRecyclerView = rootView.findViewById(R.id.recycleListaTarefa)
 
         val listaTarefas = mTarefaBusiness.getList(mSecurityPreferences.getRecuperarString(TarefasConstants.KEY.USER_ID).toInt())
-        for(i in 0..50){
+        /*for(i in 0..50){
             if(listaTarefas.size==0){
-                listaTarefas.add(TarefaEntity(0, 0, 0, "", "", false))
+                listaTarefas.add(TarefaEntity(0, 0, 1, "Sem descrição", "XX/XX/XXXX", false))
             }
             listaTarefas.add(listaTarefas[0].copy(descricao = listaTarefas[0].descricao + " - $i", id = i+2))
-        }
+        }*/
         //Segundo passo
         mRecyclerView.adapter = ListaTarefaAdapter(listaTarefas)
 
