@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.view.MenuItem
 import android.support.v4.widget.DrawerLayout
 import android.support.design.widget.NavigationView
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import com.devediapp.tarefakotlin.R
@@ -41,6 +42,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navView.setNavigationItemSelectedListener(this)
 
         mSecurityPreferences = SecurityPreferences(this)
+
+        startDeafultFragment()
     }
 
     override fun onBackPressed() {
@@ -71,29 +74,35 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
+        var fragment : Fragment
         when (item.itemId) {
             R.id.nav_done -> {
                 // Handle the camera action
+                fragment = ListaTarefaFragment.newInstance()
+                inicializaFragment(fragment)
             }
             R.id.nav_todo -> {
-
+                fragment = ListaTarefaFragment.newInstance()
+                inicializaFragment(fragment)
             }
             R.id.nav_logout -> {
                 fazerLogout()
             }
-            /*R.id.nav_tools -> {
-
-            }
-            R.id.nav_share -> {
-
-            }
-            R.id.nav_send -> {
-
-            }*/
         }
+
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    private fun inicializaFragment(fragment:Fragment){
+        val fragmentManager = supportFragmentManager
+        fragmentManager.beginTransaction().replace(R.id.frameContent, fragment).commit()
+    }
+
+    private fun startDeafultFragment(){
+        val fragment = ListaTarefaFragment.newInstance()
+        inicializaFragment(fragment)
     }
 
     private fun fazerLogout(){
