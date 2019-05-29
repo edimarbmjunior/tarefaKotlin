@@ -10,10 +10,12 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.devediapp.tarefakotlin.R
 import com.devediapp.tarefakotlin.adapter.ListaTarefaAdapter
 import com.devediapp.tarefakotlin.business.TarefaBusiness
 import com.devediapp.tarefakotlin.contants.TarefasConstants
+import com.devediapp.tarefakotlin.entity.OnListaTarefaFragmentInteractionListener
 import com.devediapp.tarefakotlin.entity.TarefaEntity
 import com.devediapp.tarefakotlin.util.SecurityPreferences
 
@@ -23,6 +25,7 @@ class ListaTarefaFragment : Fragment(), View.OnClickListener {
     private lateinit var mRecyclerView : RecyclerView
     private lateinit var mTarefaBusiness : TarefaBusiness
     private lateinit var mSecurityPreferences : SecurityPreferences
+    private lateinit var mListenerListaFragment : OnListaTarefaFragmentInteractionListener
     private var mFiltraTarefa = 2
 
     companion object {
@@ -54,6 +57,26 @@ class ListaTarefaFragment : Fragment(), View.OnClickListener {
         mTarefaBusiness = TarefaBusiness(mContext)
         mSecurityPreferences = SecurityPreferences(mContext)
 
+        //Por ser uma interface, quem instanciar ela deverá codificar seus metodos para que exista uma ação no metodo
+        mListenerListaFragment = object : OnListaTarefaFragmentInteractionListener{
+
+            override fun onListaClick(tarefaId: Int) {
+                val bundle = Bundle()
+                bundle.putInt(TarefasConstants.BUNDLE.TAREFAID, tarefaId)
+                val intent = Intent(mContext, FormularioTarefaInclusaoActivity::class.java)
+                //Colocando parametros na chamada da Activity
+                intent.putExtras(bundle)
+
+                startActivity(intent)
+            }
+
+            override fun onDeleteClick(tarefaId: Int) {
+                mTarefaBusiness.deleteTarefa(tarefaId)
+                Toast.makeText(mContext, getString(R.string.tarefa_removida_sucesso), Toast.LENGTH_LONG).show()
+                carregaTarefas()
+            }
+        }
+
         //São neessários três coisas para usar uma RecyclerView
         // 1 - Obter o elemento
         // 2 - Definir um adapter com os itens de listagem
@@ -77,7 +100,7 @@ class ListaTarefaFragment : Fragment(), View.OnClickListener {
 
         //Segundo passo
         //mRecyclerView.adapter = ListaTarefaAdapter(listaTarefas)
-        mRecyclerView.adapter = ListaTarefaAdapter(mutableListOf())
+        mRecyclerView.adapter = ListaTarefaAdapter(mutableListOf(), mListenerListaFragment)
 
         //Terceiro passo
         mRecyclerView.layoutManager = LinearLayoutManager(mContext)
@@ -100,6 +123,6 @@ class ListaTarefaFragment : Fragment(), View.OnClickListener {
 
     private fun carregaTarefas(){
         //val listaTarefas = mTarefaBusiness.getList()
-        mRecyclerView.adapter = ListaTarefaAdapter(mTarefaBusiness.getList(mFiltraTarefa))
+        mRecyclerView.adapter = ListaTarefaAdapter(mTarefaBusiness.getList(mFiltraTarefa), mListenerListaFragment)
     }
 }

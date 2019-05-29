@@ -14,4 +14,8 @@ class TarefasConstants {
         val INCOMPLETA = 0
         val TODAS = 2
     }
+
+    object BUNDLE{
+        val TAREFAID = "filtroTarefaId"
+    }
 }

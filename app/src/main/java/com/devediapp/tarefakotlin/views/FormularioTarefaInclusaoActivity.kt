@@ -28,6 +28,7 @@ class FormularioTarefaInclusaoActivity : AppCompatActivity(), View.OnClickListen
 
     private var mListPrioridadeEntity = mutableListOf<PrioridadeEntity>()
     private var mListPrioridadeId = mutableListOf<Int>()
+    private var mTarefasId : Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +41,7 @@ class FormularioTarefaInclusaoActivity : AppCompatActivity(), View.OnClickListen
         carregaListaPrioridades()
         //inicializarCampos()
         setListeners()
+        carregarDadosDeActivity()
     }
 
     private fun setListeners(){
@@ -53,7 +55,7 @@ class FormularioTarefaInclusaoActivity : AppCompatActivity(), View.OnClickListen
                 abrirDatePickerDialog()
             }
             R.id.buttonIncluirTarefaSalvar -> {
-                fazerInclusao()
+                fazerInclusaoAlteracao()
             }
         }
     }
@@ -80,6 +82,17 @@ class FormularioTarefaInclusaoActivity : AppCompatActivity(), View.OnClickListen
         spinnerIncluirTarefaDescricao.adapter = adapter
     }
 
+    private fun getIndexSpinner(fkIdPrioridade: Int): Int {
+        var index = 0
+        for(i in 0..mListPrioridadeEntity.size){
+            if(mListPrioridadeEntity[i].id == fkIdPrioridade){
+                index = i
+                break
+            }
+        }
+        return index
+    }
+
     private fun abrirDatePickerDialog(){
 
         val cal = Calendar.getInstance()
@@ -90,7 +103,7 @@ class FormularioTarefaInclusaoActivity : AppCompatActivity(), View.OnClickListen
         DatePickerDialog(this, this, ano, mes, dia).show()
     }
 
-    private fun fazerInclusao(){
+    private fun fazerInclusaoAlteracao(){
 
         try {
 
@@ -100,11 +113,20 @@ class FormularioTarefaInclusaoActivity : AppCompatActivity(), View.OnClickListen
             val dataVencimento = buttonIncluirTarefaData.text.toString()
             val usuarioId = mSecurityPreferences.getRecuperarString(TarefasConstants.KEY.USER_ID).toInt()
 
-            var tarefaEntity = TarefaEntity(0, usuarioId, prioridadeId, descricao, dataVencimento, status)
+            var tarefaEntity = TarefaEntity(mTarefasId, usuarioId, prioridadeId, descricao, dataVencimento, status)
 
-            tarefaEntity = mTarefaBusiness.insertTarefa(tarefaEntity)
+            val msg :StringBuilder = java.lang.StringBuilder(250)
+            if(mTarefasId == 0){
+                tarefaEntity = mTarefaBusiness.insertTarefa(tarefaEntity)
+                msg.append(getString(R.string.cadastro_sucesso) + " Tarefa de número ${tarefaEntity.id} realizada!")
+            }else{
+                tarefaEntity.id = mTarefasId
+                mTarefaBusiness.updateTarefa(tarefaEntity)
+                msg.append(getString(R.string.atualizacao_sucesso) + " Tarefa de número ${tarefaEntity.id} realizada!")
+            }
 
-            Toast.makeText(this, getString(R.string.cadastro_sucesso) + " Tarefa de número ${tarefaEntity.id} realizada!", Toast.LENGTH_LONG).show()
+
+            Toast.makeText(this, msg.toString(), Toast.LENGTH_LONG).show()
             finish()
 
         }catch (mValidationException : ValidationException){
@@ -125,5 +147,21 @@ class FormularioTarefaInclusaoActivity : AppCompatActivity(), View.OnClickListen
         val incializarData = dia.toString() + "/" + mesAjustado + "/" + ano.toString()
 
         buttonIncluirTarefaData.text = incializarData
+    }
+
+    private fun carregarDadosDeActivity(){
+        val bundle = intent.extras
+        if(bundle != null){
+            mTarefasId = bundle.getInt(TarefasConstants.BUNDLE.TAREFAID)
+
+            val tarefa = mTarefaBusiness.get(mTarefasId)
+
+            if (tarefa != null) {
+                editIncluirTarefaDescricao.setText(tarefa.descricao)
+                buttonIncluirTarefaData.setText(tarefa.dataVencimento)
+                checkIncluirTarefaCompleto.isChecked = tarefa.status
+                spinnerIncluirTarefaDescricao.setSelection(getIndexSpinner(tarefa.fkIdPrioridade))
+            }
+        }
     }
 }
