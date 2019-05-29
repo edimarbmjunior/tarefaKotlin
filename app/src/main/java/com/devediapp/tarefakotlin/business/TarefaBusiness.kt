@@ -13,9 +13,9 @@ class TarefaBusiness (private val context: Context) {
     private val mTarefaRepository: TarefaRepository = TarefaRepository.getInstance(context)
     private val mSecurityPreferences : SecurityPreferences = SecurityPreferences(context)
 
-    fun getList() : MutableList<TarefaEntity> {
+    fun getList(filtraTarefa: Int) : MutableList<TarefaEntity> {
         val fkIdUser = mSecurityPreferences.getRecuperarString(TarefasConstants.KEY.USER_ID).toInt()
-        return mTarefaRepository.getList(fkIdUser)
+        return mTarefaRepository.getList(fkIdUser, filtraTarefa)
     }
 
     fun insertTarefa(tarefaEntity: TarefaEntity) : TarefaEntity {

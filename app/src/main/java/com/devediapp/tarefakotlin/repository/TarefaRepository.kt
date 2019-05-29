@@ -29,16 +29,23 @@ class TarefaRepository private constructor(context: Context){
         private var INSTANCE : TarefaRepository? = null
     }
 
-    fun getList(userId: Int) : MutableList<TarefaEntity> {
+    fun getList(userId: Int, filtraTarefa: Int) : MutableList<TarefaEntity> {
         val list = mutableListOf<TarefaEntity>()
         try {
 
             val cursor: Cursor
             val db = mTaskDataBaseHelper.readableDatabase
 
-            val query = """SELECT * FROM ${DataBaseContants.TAREFA.TABLE_NAME}
-                        WHERE ${DataBaseContants.TAREFA.COLUMNS.FK_USER_ID} = $userId
-                        ORDER BY ${DataBaseContants.TAREFA.COLUMNS.ID} """
+            val query = if(filtraTarefa!=2){
+                """SELECT * FROM ${DataBaseContants.TAREFA.TABLE_NAME}
+                                WHERE ${DataBaseContants.TAREFA.COLUMNS.FK_USER_ID} = $userId
+                                  AND ${DataBaseContants.TAREFA.COLUMNS.STATUS} = $filtraTarefa
+                                ORDER BY ${DataBaseContants.TAREFA.COLUMNS.ID} """
+            }else{
+                """SELECT * FROM ${DataBaseContants.TAREFA.TABLE_NAME}
+                                WHERE ${DataBaseContants.TAREFA.COLUMNS.FK_USER_ID} = $userId
+                                ORDER BY ${DataBaseContants.TAREFA.COLUMNS.ID} """
+            }
 
             cursor = db.rawQuery(
                 query, null

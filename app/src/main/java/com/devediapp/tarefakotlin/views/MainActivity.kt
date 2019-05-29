@@ -83,11 +83,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         when (item.itemId) {
             R.id.nav_done -> {
                 // Handle the camera action
-                fragment = ListaTarefaFragment.newInstance()
+                fragment = ListaTarefaFragment.newInstance(TarefasConstants.FILTRO_TAREFAS.COMPLETA)
                 inicializaFragment(fragment)
             }
             R.id.nav_todo -> {
-                fragment = ListaTarefaFragment.newInstance()
+                fragment = ListaTarefaFragment.newInstance(TarefasConstants.FILTRO_TAREFAS.INCOMPLETA)
                 inicializaFragment(fragment)
             }
             R.id.nav_logout -> {
@@ -106,7 +106,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun startDeafultFragment(){
-        val fragment = ListaTarefaFragment.newInstance()
+        val fragment = ListaTarefaFragment.newInstance(TarefasConstants.FILTRO_TAREFAS.TODAS)
         inicializaFragment(fragment)
     }
 

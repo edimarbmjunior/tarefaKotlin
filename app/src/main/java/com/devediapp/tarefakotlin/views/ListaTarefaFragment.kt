@@ -23,24 +23,26 @@ class ListaTarefaFragment : Fragment(), View.OnClickListener {
     private lateinit var mRecyclerView : RecyclerView
     private lateinit var mTarefaBusiness : TarefaBusiness
     private lateinit var mSecurityPreferences : SecurityPreferences
+    private var mFiltraTarefa = 2
 
     companion object {
 
-        fun newInstance(): ListaTarefaFragment {
-            /*Bundle args = new Bundle();
-            args.putString(ARG_PARAM1, param1);
-            args.putString(ARG_PARAM2, param2);
-            fragment.setArguments(args);*/
-            return ListaTarefaFragment()
+        fun newInstance(filtroTarefa: Int?): ListaTarefaFragment {
+            val args: Bundle = Bundle()
+            args.putInt(TarefasConstants.FILTRO_TAREFAS.KEY, filtroTarefa!!)
+
+            val fragment = ListaTarefaFragment()
+            fragment.arguments = args
+
+            return fragment
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        /*if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }*/
+        if (arguments != null) {
+            mFiltraTarefa = arguments!!.getInt(TarefasConstants.FILTRO_TAREFAS.KEY, 0)
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) : View? {
@@ -98,6 +100,6 @@ class ListaTarefaFragment : Fragment(), View.OnClickListener {
 
     private fun carregaTarefas(){
         //val listaTarefas = mTarefaBusiness.getList()
-        mRecyclerView.adapter = ListaTarefaAdapter(mTarefaBusiness.getList())
+        mRecyclerView.adapter = ListaTarefaAdapter(mTarefaBusiness.getList(mFiltraTarefa))
     }
 }
