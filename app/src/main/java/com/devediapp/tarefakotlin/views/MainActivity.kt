@@ -10,11 +10,14 @@ import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.widget.TextView
 import com.devediapp.tarefakotlin.R
 import com.devediapp.tarefakotlin.business.PrioridadeBusiness
 import com.devediapp.tarefakotlin.contants.TarefasConstants
 import com.devediapp.tarefakotlin.repository.PrioridadeCacheConstantes
 import com.devediapp.tarefakotlin.util.SecurityPreferences
+import kotlinx.android.synthetic.main.app_bar_main.*
+import java.util.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -26,6 +29,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_main)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
+        //Remove nome do titulo do aplicativo
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         /*val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.setOnClickListener { view ->
@@ -33,7 +38,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 .setAction("Action", null).show()
         }*/
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
-        val navView: NavigationView = findViewById(R.id.nav_view)
+        val navView: NavigationView = findViewById(R.id.nav_view_main)
         val toggle = ActionBarDrawerToggle(
             this, drawerLayout, toolbar,
             R.string.navigation_drawer_open,
@@ -49,6 +54,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         armazenarCachePrioridade()
         startDeafultFragment()
+        formatarNome()
+        formatarData()
     }
 
     override fun onBackPressed() {
@@ -122,5 +129,29 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun armazenarCachePrioridade(){
         PrioridadeCacheConstantes.setCahe(mPrioridadeBusiness.getList())
+    }
+
+    private  fun formatarNome(){
+        val str = "Olá, ${mSecurityPreferences.getRecuperarString(TarefasConstants.KEY.USER_NOME)}!"
+        textAppBarHello.text = str
+
+        //Obter o filho da main que seria o navigation view, para conseguir obter o Nav Header Main na MainActivity, para alterar dados no header
+        val navigationView = findViewById(R.id.nav_view_main) as NavigationView
+        val header = navigationView.getHeaderView(0)
+
+        val nome = header.findViewById<TextView>(R.id.textNavHeaderMainNome)
+        val email = header.findViewById<TextView>(R.id.textNavHeaderMainEmail)
+        nome.text = mSecurityPreferences.getRecuperarString(TarefasConstants.KEY.USER_NOME)
+        email.text = mSecurityPreferences.getRecuperarString(TarefasConstants.KEY.USER_EMAIL)
+    }
+
+    private fun formatarData(){
+        val calendar = Calendar.getInstance()
+        val days = arrayOf("Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado")
+        val months = arrayOf("Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro")
+
+        val str = "${days[calendar.get(Calendar.DAY_OF_WEEK) - 1]}, ${calendar.get(Calendar.DAY_OF_MONTH)} de ${months[calendar.get(Calendar.MONTH)]}"
+
+        textAppBarDescricaoData.text = str
     }
 }

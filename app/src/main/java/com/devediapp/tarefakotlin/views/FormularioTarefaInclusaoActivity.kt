@@ -161,6 +161,7 @@ class FormularioTarefaInclusaoActivity : AppCompatActivity(), View.OnClickListen
                 buttonIncluirTarefaData.setText(tarefa.dataVencimento)
                 checkIncluirTarefaCompleto.isChecked = tarefa.status
                 spinnerIncluirTarefaDescricao.setSelection(getIndexSpinner(tarefa.fkIdPrioridade))
+                buttonIncluirTarefaSalvar.text = getString(R.string.atualizar_tarefa)
             }
         }
     }

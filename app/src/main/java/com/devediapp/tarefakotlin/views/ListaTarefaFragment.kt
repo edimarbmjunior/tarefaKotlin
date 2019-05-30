@@ -75,6 +75,17 @@ class ListaTarefaFragment : Fragment(), View.OnClickListener {
                 Toast.makeText(mContext, getString(R.string.tarefa_removida_sucesso), Toast.LENGTH_LONG).show()
                 carregaTarefas()
             }
+
+            override fun onStatusIncompletoClick(tarefaId: Int) {
+                mTarefaBusiness.atualizaStatus(tarefaId, false)
+                carregaTarefas()
+            }
+
+            override fun onStatusCompletoClick(tarefaId: Int) {
+                mTarefaBusiness.atualizaStatus(tarefaId, true)
+                carregaTarefas()
+            }
+
         }
 
         //São neessários três coisas para usar uma RecyclerView

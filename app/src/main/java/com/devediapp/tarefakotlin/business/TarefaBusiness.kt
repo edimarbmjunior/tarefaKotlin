@@ -151,4 +151,12 @@ class TarefaBusiness (private val context: Context) {
             throw e
         }
     }
+
+    fun atualizaStatus(mTarefaId: Int, situacaoAtualizada: Boolean){
+        val tarefa = mTarefaRepository.get(mTarefaId)
+        if(tarefa != null){
+            tarefa.status = situacaoAtualizada
+            mTarefaRepository.updateTarefa(tarefa)
+        }
+    }
 }

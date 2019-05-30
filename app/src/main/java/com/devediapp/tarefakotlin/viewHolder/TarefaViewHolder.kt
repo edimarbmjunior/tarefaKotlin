@@ -44,6 +44,14 @@ class TarefaViewHolder(itemView: View, val mContext: Context,  val listenerFragm
             //fixo
             true
         }
+
+        mImagemStatus.setOnClickListener {
+            if(tarefa.status){
+                listenerFragment.onStatusIncompletoClick(tarefa.id)
+            }else{
+                listenerFragment.onStatusCompletoClick(tarefa.id)
+            }
+        }
     }
 
     private fun mostrarConfirmacaoDelecao(tarefaId: TarefaEntity){
