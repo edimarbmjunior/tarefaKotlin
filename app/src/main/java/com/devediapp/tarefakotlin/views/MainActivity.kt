@@ -2,14 +2,14 @@ package com.devediapp.tarefakotlin.views
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.view.GravityCompat
-import android.support.v7.app.ActionBarDrawerToggle
-import android.view.MenuItem
-import android.support.v4.widget.DrawerLayout
 import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
+import android.support.v4.view.GravityCompat
+import android.support.v4.widget.DrawerLayout
+import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.view.MenuItem
 import android.widget.TextView
 import com.devediapp.tarefakotlin.R
 import com.devediapp.tarefakotlin.business.PrioridadeBusiness
@@ -21,8 +21,8 @@ import java.util.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    private lateinit var mSecurityPreferences : SecurityPreferences
-    private lateinit var mPrioridadeBusiness : PrioridadeBusiness
+    private lateinit var mSecurityPreferences: SecurityPreferences
+    private lateinit var mPrioridadeBusiness: PrioridadeBusiness
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,7 +86,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
-        var fragment : Fragment
+        var fragment: Fragment
         when (item.itemId) {
             R.id.nav_done -> {
                 // Handle the camera action
@@ -107,17 +107,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
-    private fun inicializaFragment(fragment:Fragment){
+    private fun inicializaFragment(fragment: Fragment) {
         val fragmentManager = supportFragmentManager
         fragmentManager.beginTransaction().replace(R.id.frameContent, fragment).commit()
     }
 
-    private fun startDeafultFragment(){
+    private fun startDeafultFragment() {
         val fragment = ListaTarefaFragment.newInstance(TarefasConstants.FILTRO_TAREFAS.TODAS)
         inicializaFragment(fragment)
     }
 
-    private fun fazerLogout(){
+    private fun fazerLogout() {
 
         //Apagar dados da memoria
         mSecurityPreferences.removerStoredString(TarefasConstants.KEY.USER_NOME)
@@ -127,11 +127,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         startActivity(Intent(this, LoginActivity::class.java))
     }
 
-    private fun armazenarCachePrioridade(){
+    private fun armazenarCachePrioridade() {
         PrioridadeCacheConstantes.setCahe(mPrioridadeBusiness.getList())
     }
 
-    private  fun formatarNome(){
+    private fun formatarNome() {
         val str = "Olá, ${mSecurityPreferences.getRecuperarString(TarefasConstants.KEY.USER_NOME)}!"
         textAppBarHello.text = str
 
@@ -145,12 +145,29 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         email.text = mSecurityPreferences.getRecuperarString(TarefasConstants.KEY.USER_EMAIL)
     }
 
-    private fun formatarData(){
+    private fun formatarData() {
         val calendar = Calendar.getInstance()
-        val days = arrayOf("Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado")
-        val months = arrayOf("Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro")
+        val days =
+            arrayOf("Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado")
+        val months = arrayOf(
+            "Janeiro",
+            "Fevereiro",
+            "Março",
+            "Abril",
+            "Maio",
+            "Junho",
+            "Julho",
+            "Agosto",
+            "Setembro",
+            "Outubro",
+            "Novembro",
+            "Dezembro"
+        )
 
-        val str = "${days[calendar.get(Calendar.DAY_OF_WEEK) - 1]}, ${calendar.get(Calendar.DAY_OF_MONTH)} de ${months[calendar.get(Calendar.MONTH)]}"
+        val str =
+            "${days[calendar.get(Calendar.DAY_OF_WEEK) - 1]}, ${calendar.get(Calendar.DAY_OF_MONTH)} de ${months[calendar.get(
+                Calendar.MONTH
+            )]}"
 
         textAppBarDescricaoData.text = str
     }

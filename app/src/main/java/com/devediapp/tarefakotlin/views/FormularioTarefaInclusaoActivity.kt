@@ -1,8 +1,10 @@
 package com.devediapp.tarefakotlin.views
 
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
@@ -18,6 +20,7 @@ import com.devediapp.tarefakotlin.util.ValidationException
 import kotlinx.android.synthetic.main.activity_formulario_tarefa_inclusao.*
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class FormularioTarefaInclusaoActivity : AppCompatActivity(), View.OnClickListener, DatePickerDialog.OnDateSetListener {
 
@@ -37,12 +40,31 @@ class FormularioTarefaInclusaoActivity : AppCompatActivity(), View.OnClickListen
         mPrioridadeBusiness = PrioridadeBusiness(this)
         mTarefaBusiness = TarefaBusiness(this)
         mSecurityPreferences = SecurityPreferences(this)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)//Mostrar botão voltar
+        supportActionBar?.setHomeButtonEnabled(true) // Ativar o botão
 
         carregaListaPrioridades()
         //inicializarCampos()
         setListeners()
         carregarDadosDeActivity()
     }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {//Botão adicional na ToolBar
+        return super.onOptionsItemSelected(item)
+        when(item?.itemId){
+            android.R.id.home ->{//Id do botão voltar gerado automaticamente
+                //startActivity(Intent(this, MainActivity::class.java))
+                finish()
+            }
+        }
+        return true
+    }
+
+   /* override fun onBackPressed() {//Botão BACK padrão do android
+        super.onBackPressed()
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
+    }*/
 
     private fun setListeners(){
         buttonIncluirTarefaData.setOnClickListener(this)

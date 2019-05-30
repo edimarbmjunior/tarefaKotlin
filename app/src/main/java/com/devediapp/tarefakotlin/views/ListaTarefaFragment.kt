@@ -94,7 +94,7 @@ class ListaTarefaFragment : Fragment(), View.OnClickListener {
         // 3 - Definir um layout
 
         //Primeiro passo do RecyclerView
-        mRecyclerView = rootView.findViewById(R.id.recycleListaTarefa)
+        mRecyclerView = rootView.findViewById(R.id.recycleListaTarefa) as RecyclerView
 
         //val listaTarefas = mTarefaBusiness.getList(mSecurityPreferences.getRecuperarString(TarefasConstants.KEY.USER_ID).toInt())
         //OU
