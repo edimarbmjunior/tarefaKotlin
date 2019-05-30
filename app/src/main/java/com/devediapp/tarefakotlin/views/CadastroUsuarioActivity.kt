@@ -3,6 +3,7 @@ package com.devediapp.tarefakotlin.views
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import com.devediapp.tarefakotlin.R
@@ -20,6 +21,8 @@ class CadastroUsuarioActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cadastro_usuario)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)//Mostrar botão voltar
+        supportActionBar?.setHomeButtonEnabled(true) // Ativar o botão
 
         setLiners()
         mUserBusiness = UserBusiness(application)
@@ -35,6 +38,17 @@ class CadastroUsuarioActivity : AppCompatActivity(), View.OnClickListener {
                 handleSave()
             }
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {//Botão adicional na ToolBar
+        super.onOptionsItemSelected(item)
+        when(item?.itemId){
+            android.R.id.home ->{//Id do botão voltar gerado automaticamente
+                //startActivity(Intent(this, MainActivity::class.java))
+                finish()
+            }
+        }
+        return true
     }
 
     private fun handleSave(){

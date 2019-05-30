@@ -88,8 +88,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Handle navigation view item clicks here.
         var fragment: Fragment
         when (item.itemId) {
+            R.id.nav_todos -> {
+                fragment = ListaTarefaFragment.newInstance(TarefasConstants.FILTRO_TAREFAS.TODAS)
+                inicializaFragment(fragment)
+            }
             R.id.nav_done -> {
-                // Handle the camera action
                 fragment = ListaTarefaFragment.newInstance(TarefasConstants.FILTRO_TAREFAS.COMPLETA)
                 inicializaFragment(fragment)
             }

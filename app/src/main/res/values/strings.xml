@@ -32,4 +32,5 @@
     <string name="dados_invalidos">Dados inválidos!</string>
     <string name="tarefa_removida_sucesso">Tarefa removido com sucesso!</string>
     <string name="atualizar_tarefa">Atualizar tarefa</string>
+    <string name="email_nao_valido">E-mail não é válido.</string>
 </resources>

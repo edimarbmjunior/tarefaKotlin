@@ -6,6 +6,7 @@ import com.devediapp.tarefakotlin.contants.TarefasConstants
 import com.devediapp.tarefakotlin.entity.UserEntity
 import com.devediapp.tarefakotlin.repository.UserRepository
 import com.devediapp.tarefakotlin.util.SecurityPreferences
+import com.devediapp.tarefakotlin.util.UtilGenerico
 import com.devediapp.tarefakotlin.util.ValidationException
 import java.lang.Exception
 
@@ -19,6 +20,10 @@ class UserBusiness (private val context: Context){
         try {
             if(userEntity.nome.isNullOrBlank() || userEntity.email.isNullOrBlank() || userEntity.senha.isNullOrBlank()){
                 throw ValidationException(context.getString(R.string.informe_dados_corretamente))
+            }
+
+            if(UtilGenerico.isEmailValid(userEntity.email)){
+                throw ValidationException(context.getString(R.string.email_nao_valido))
             }
 
             if(mUserRepository.buscaEmail(userEntity.email)){

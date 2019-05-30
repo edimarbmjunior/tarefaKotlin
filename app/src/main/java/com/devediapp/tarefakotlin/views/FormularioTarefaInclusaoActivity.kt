@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
+import android.widget.SpinnerAdapter
 import android.widget.Toast
 import com.devediapp.tarefakotlin.R
 import com.devediapp.tarefakotlin.business.PrioridadeBusiness
@@ -50,7 +51,7 @@ class FormularioTarefaInclusaoActivity : AppCompatActivity(), View.OnClickListen
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {//Botão adicional na ToolBar
-        return super.onOptionsItemSelected(item)
+        super.onOptionsItemSelected(item)
         when(item?.itemId){
             android.R.id.home ->{//Id do botão voltar gerado automaticamente
                 //startActivity(Intent(this, MainActivity::class.java))
@@ -59,12 +60,6 @@ class FormularioTarefaInclusaoActivity : AppCompatActivity(), View.OnClickListen
         }
         return true
     }
-
-   /* override fun onBackPressed() {//Botão BACK padrão do android
-        super.onBackPressed()
-        startActivity(Intent(this, MainActivity::class.java))
-        finish()
-    }*/
 
     private fun setListeners(){
         buttonIncluirTarefaData.setOnClickListener(this)
@@ -101,7 +96,7 @@ class FormularioTarefaInclusaoActivity : AppCompatActivity(), View.OnClickListen
         mListPrioridadeId = mListPrioridadeEntity.map { it.id }.toMutableList()
 
         val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, listPrioridades)
-        spinnerIncluirTarefaDescricao.adapter = adapter
+        spinnerIncluirTarefaDescricao.adapter = adapter as SpinnerAdapter?
     }
 
     private fun getIndexSpinner(fkIdPrioridade: Int): Int {

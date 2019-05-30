@@ -5,8 +5,9 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="@dimen/activity_vertical_margin"
         tools:context=".views.CadastroUsuarioActivity"
-        android:layout_margin="5mm">
+        >
 
     <EditText
             android:id="@+id/editNomeCadastroUsuario"
@@ -15,9 +16,8 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:gravity="center"
             android:hint="@string/nome"
-    />
+            style="@style/mGrayEditText" android:drawableLeft="@drawable/ic_name"/>
 
     <EditText
             android:id="@+id/editEmailCadastroUsuario"
@@ -26,10 +26,9 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editNomeCadastroUsuario"
-            android:gravity="center"
             android:hint="@string/e_mail"
             android:inputType="textEmailAddress"
-    />
+            style="@style/mGrayEditText" android:drawableLeft="@drawable/ic_email"/>
 
     <EditText
             android:id="@+id/editPasswordCadastroUsuario"
@@ -38,11 +37,10 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editEmailCadastroUsuario"
-            android:gravity="center"
             android:hint="@string/senha"
             android:inputType="textPassword"
-    />
-    
+            style="@style/mGrayEditText" android:drawableLeft="@drawable/ic_lock"/>
+
     <Button
             android:id="@+id/buttonSaveCadastroUsuario"
             android:layout_width="wrap_content"
@@ -50,8 +48,6 @@
             android:text="@string/cadastrar"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editPasswordCadastroUsuario"
-            android:layout_marginTop="10mm"
-    />
+            app:layout_constraintBottom_toBottomOf="parent" style="@style/mDefaultButton"/>
 
 </android.support.constraint.ConstraintLayout>

@@ -5,16 +5,20 @@
 
     <group android:checkableBehavior="single">
         <item
+                android:id="@+id/nav_todos"
+                android:icon="@drawable/checkbox_selector"
+                android:title="Todas"/>
+        <item
                 android:id="@+id/nav_done"
-                android:icon="@drawable/ic_menu_camera"
+                android:icon="@drawable/ic_finalizadas"
                 android:title="Feitas"/>
         <item
                 android:id="@+id/nav_todo"
-                android:icon="@drawable/ic_menu_gallery"
+                android:icon="@drawable/ic_pendencia"
                 android:title="Pendentes"/>
         <item
                 android:id="@+id/nav_logout"
-                android:icon="@drawable/ic_menu_slideshow"
+                android:icon="@drawable/ic_sair"
                 android:title="Sair"/>
         <!--<item
                 android:id="@+id/nav_tools"
