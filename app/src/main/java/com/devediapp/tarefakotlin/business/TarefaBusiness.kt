@@ -7,11 +7,15 @@ import com.devediapp.tarefakotlin.entity.TarefaEntity
 import com.devediapp.tarefakotlin.repository.TarefaRepository
 import com.devediapp.tarefakotlin.util.SecurityPreferences
 import com.devediapp.tarefakotlin.util.ValidationException
+import kotlinx.android.synthetic.main.activity_formulario_tarefa_inclusao.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class TarefaBusiness (private val context: Context) {
 
     private val mTarefaRepository: TarefaRepository = TarefaRepository.getInstance(context)
     private val mSecurityPreferences : SecurityPreferences = SecurityPreferences(context)
+    private val mSimpleDateFormat : SimpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
 
     fun getList(filtraTarefa: Int) : MutableList<TarefaEntity> {
         val fkIdUser = mSecurityPreferences.getRecuperarString(TarefasConstants.KEY.USER_ID).toInt()
@@ -35,13 +39,30 @@ class TarefaBusiness (private val context: Context) {
                     msg.append(" / ")
                 }
                 msg.append("status")
+                temErro = true
             }
 
-            if(tarefaEntity.dataVencimento.toString().contains("Selecionar")){
+            if(tarefaEntity.dataVencimento.contains("para")){
+                tarefaEntity.dataVencimento = ""
+                //val cal = Calendar.getInstance()
+                //tarefaEntity.dataVencimento = mSimpleDateFormat.format(cal.time)
+            }else{
                 if(temErro){
                     msg.append(" / ")
                 }
-                msg.append("data de vencimento")
+                val cal = Calendar.getInstance()
+                val ano = cal.get(Calendar.YEAR)
+                val mes = cal.get(Calendar.MONTH) + 1
+                val dia = cal.get(Calendar.DAY_OF_MONTH)
+
+                val dataSeparada = arrayListOf(tarefaEntity.dataVencimento.substring(0, 2).toInt(), tarefaEntity.dataVencimento.substring(3, 5).toInt(), tarefaEntity.dataVencimento.substring(6, 10).toInt())
+
+                if(dataSeparada[2] < ano ||
+                    (dataSeparada[2] == ano && dataSeparada[1] < mes) ||
+                    (dataSeparada[2] == cal.get(Calendar.YEAR) && dataSeparada[1] == mes && dataSeparada[0] <= dia)){
+                    msg.append("data de vencimento")
+                    temErro = true
+                }
             }
 
             if(tarefaEntity.fkIdPrioridade==0 || tarefaEntity.fkIdPrioridade.toString().isNullOrBlank()){
@@ -49,12 +70,14 @@ class TarefaBusiness (private val context: Context) {
                     msg.append(" / não foi escolhida uma prioridade")
                 }
                 msg.append("status")
+                temErro = true
             }
             if(tarefaEntity.fkIdUser==0 || tarefaEntity.fkIdUser.toString().isNullOrBlank()){
                 if(temErro){
                     msg.append(" / status")
                 }
                 msg.append("status")
+                temErro = true
             }
 
             if(temErro){

@@ -16,7 +16,7 @@
     <string name="nome">Nome</string>
     <string name="e_mail">E-mail</string>
     <string name="cadastrar">Cadastrar</string>
-    <string name="informe_dados_corretamente">Informe os dados corretamente!</string>
+    <string name="informe_dados_corretamente">Algum dos dados não foi preenchido!</string>
     <string name="email_existe">E-mail já está em uso!</string>
     <string name="erro_generico">Algo de errado aconteceu! Tente Novamente!</string>
     <string name="cadastro_sucesso">Cadastro foi um sucesso!</string>
@@ -33,4 +33,5 @@
     <string name="tarefa_removida_sucesso">Tarefa removido com sucesso!</string>
     <string name="atualizar_tarefa">Atualizar tarefa</string>
     <string name="email_nao_valido">E-mail não é válido.</string>
+    <string name="senha_mais_5_caracteres">A senha deve possuir mais de 5 caracteres!</string>
 </resources>

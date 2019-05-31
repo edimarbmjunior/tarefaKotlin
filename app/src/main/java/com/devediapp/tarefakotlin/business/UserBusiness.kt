@@ -22,12 +22,16 @@ class UserBusiness (private val context: Context){
                 throw ValidationException(context.getString(R.string.informe_dados_corretamente))
             }
 
-            if(UtilGenerico.isEmailValid(userEntity.email)){
+            if(userEntity.email.isEmpty() || !UtilGenerico.isEmailValid(userEntity.email)){
                 throw ValidationException(context.getString(R.string.email_nao_valido))
             }
 
             if(mUserRepository.buscaEmail(userEntity.email)){
                 throw ValidationException(context.getString(R.string.email_existe))
+            }
+
+            if(userEntity.senha.count() < 5){
+                throw ValidationException(context.getString(R.string.senha_mais_5_caracteres))
             }
 
             userEntity.idUser = mUserRepository.insertUser(userEntity)

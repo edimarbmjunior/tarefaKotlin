@@ -1,5 +1,6 @@
 package com.devediapp.tarefakotlin.util
 
+import android.util.Patterns
 import java.util.regex.Pattern
 
 class UtilGenerico {
@@ -22,7 +23,7 @@ class UtilGenerico {
         }
 
         fun isEmailValid(email: String): Boolean {
-            return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+            return Patterns.EMAIL_ADDRESS.matcher(email).matches()
         }
     }
 }
