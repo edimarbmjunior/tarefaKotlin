@@ -9,4 +9,6 @@ interface OnListaTarefaFragmentInteractionListener {
     fun onStatusIncompletoClick(tarefaId: Int)
 
     fun onStatusCompletoClick(tarefaId: Int)
+
+    fun OnPopUpImagem(tarefaId: Int)
 }

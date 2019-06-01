@@ -1,7 +1,11 @@
 package com.devediapp.tarefakotlin.views
 
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
@@ -10,6 +14,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import com.devediapp.tarefakotlin.R
 import com.devediapp.tarefakotlin.adapter.ListaTarefaAdapter
@@ -18,6 +24,10 @@ import com.devediapp.tarefakotlin.contants.TarefasConstants
 import com.devediapp.tarefakotlin.entity.OnListaTarefaFragmentInteractionListener
 import com.devediapp.tarefakotlin.entity.TarefaEntity
 import com.devediapp.tarefakotlin.util.SecurityPreferences
+import com.devediapp.tarefakotlin.util.UtilGenerico
+import kotlinx.android.synthetic.main.pop_up_imagem.*
+import java.lang.Exception
+import java.util.*
 
 class ListaTarefaFragment : Fragment(), View.OnClickListener {
 
@@ -27,6 +37,7 @@ class ListaTarefaFragment : Fragment(), View.OnClickListener {
     private lateinit var mSecurityPreferences : SecurityPreferences
     private lateinit var mListenerListaFragment : OnListaTarefaFragmentInteractionListener
     private var mFiltraTarefa = 2
+    private lateinit var mDialog: Dialog
 
     companion object {
 
@@ -56,6 +67,7 @@ class ListaTarefaFragment : Fragment(), View.OnClickListener {
 
         mTarefaBusiness = TarefaBusiness(mContext)
         mSecurityPreferences = SecurityPreferences(mContext)
+        mDialog = Dialog(mContext)
 
         //Por ser uma interface, quem instanciar ela deverá codificar seus metodos para que exista uma ação no metodo
         mListenerListaFragment = object : OnListaTarefaFragmentInteractionListener{
@@ -84,6 +96,34 @@ class ListaTarefaFragment : Fragment(), View.OnClickListener {
             override fun onStatusCompletoClick(tarefaId: Int) {
                 mTarefaBusiness.atualizaStatus(tarefaId, true)
                 carregaTarefas()
+            }
+
+            override fun OnPopUpImagem(tarefaId: Int) {
+                val mTarefa = mTarefaBusiness.get(tarefaId)
+                if(mTarefa != null && mTarefa.imagem.isNotEmpty()){
+                    var decodedByte : Bitmap? = null
+
+                    try {
+                        decodedByte = UtilGenerico.decodeFromBase64ToBitmap(mTarefa.imagem)
+                    }catch (e: Exception){
+                        UtilGenerico.mostrarMensagemToastLong(mContext, "Error: >${e}")
+                    }
+                    if(decodedByte != null){
+                        mDialog.setContentView(R.layout.pop_up_imagem)
+
+                        val imagemFotopop = mDialog.findViewById(R.id.imagemViewFotoTarefa) as ImageView
+                        imagemFotopop.setImageBitmap(decodedByte)
+                        val mTextviewFotoClose : TextView = mDialog.findViewById(R.id.textviewFotoClose) as TextView
+                        mTextviewFotoClose.setOnClickListener(View.OnClickListener {
+                            mDialog.dismiss()
+                        })
+                        mDialog.show()
+                    }else{
+                        UtilGenerico.mostrarMensagemToastLong(mContext, getString(R.string.problema_imagem_generico))
+                    }
+                }else{
+                    UtilGenerico.mostrarMensagemToastLong(mContext, getString(R.string.nao_imagem))
+                }
             }
 
         }

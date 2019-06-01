@@ -6,4 +6,6 @@
     <color name="colorDefaultBackground">#f6f6f6</color>
     <color name="colorGrayText">#c1c1c1</color>
     <color name="colorDescricaoTarefa">#535353</color>
+    <color name="Escuro">#2f333f</color>
+    <color name="claro">#fff</color>
 </resources>

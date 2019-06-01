@@ -15,7 +15,7 @@ class TarefaBusiness (private val context: Context) {
 
     private val mTarefaRepository: TarefaRepository = TarefaRepository.getInstance(context)
     private val mSecurityPreferences : SecurityPreferences = SecurityPreferences(context)
-    private val mSimpleDateFormat : SimpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
+    private val mSimpleDateFormat : SimpleDateFormat = SimpleDateFormat("dd/MM/yyyy", Locale("pt", "BR"))
 
     fun getList(filtraTarefa: Int) : MutableList<TarefaEntity> {
         val fkIdUser = mSecurityPreferences.getRecuperarString(TarefasConstants.KEY.USER_ID).toInt()
@@ -51,6 +51,7 @@ class TarefaBusiness (private val context: Context) {
                     msg.append(" / ")
                 }
                 val cal = Calendar.getInstance()
+                cal.timeZone = TimeZone.getTimeZone("GMT-03:00")
                 val ano = cal.get(Calendar.YEAR)
                 val mes = cal.get(Calendar.MONTH) + 1
                 val dia = cal.get(Calendar.DAY_OF_MONTH)
@@ -59,7 +60,7 @@ class TarefaBusiness (private val context: Context) {
 
                 if(dataSeparada[2] < ano ||
                     (dataSeparada[2] == ano && dataSeparada[1] < mes) ||
-                    (dataSeparada[2] == cal.get(Calendar.YEAR) && dataSeparada[1] == mes && dataSeparada[0] <= dia)){
+                    (dataSeparada[2] == cal.get(Calendar.YEAR) && dataSeparada[1] == mes && dataSeparada[0] < dia)){
                     msg.append("data de vencimento")
                     temErro = true
                 }
@@ -67,17 +68,26 @@ class TarefaBusiness (private val context: Context) {
 
             if(tarefaEntity.fkIdPrioridade==0 || tarefaEntity.fkIdPrioridade.toString().isNullOrBlank()){
                 if(temErro){
-                    msg.append(" / não foi escolhida uma prioridade")
+                    msg.append(" / ")
                 }
                 msg.append("status")
                 temErro = true
             }
             if(tarefaEntity.fkIdUser==0 || tarefaEntity.fkIdUser.toString().isNullOrBlank()){
                 if(temErro){
-                    msg.append(" / status")
+                    msg.append(" / ")
                 }
                 msg.append("status")
                 temErro = true
+            }
+
+            if(tarefaEntity.imagem.isNullOrEmpty()){
+                tarefaEntity.imagem = ""
+                /*if(temErro){
+                    msg.append(" / ")
+                }
+                msg.append("Foto")
+                temErro = true*/
             }
 
             if(temErro){
@@ -128,15 +138,24 @@ class TarefaBusiness (private val context: Context) {
 
             if(tarefaEntity.fkIdPrioridade==0 || tarefaEntity.fkIdPrioridade.toString().isNullOrBlank()){
                 if(temErro){
-                    msg.append(" / não foi escolhida uma prioridade")
+                    msg.append(" / ")
                 }
                 msg.append("status")
             }
             if(tarefaEntity.fkIdUser==0 || tarefaEntity.fkIdUser.toString().isNullOrBlank()){
                 if(temErro){
-                    msg.append(" / status")
+                    msg.append(" / ")
                 }
                 msg.append("status")
+            }
+
+            if(tarefaEntity.imagem.isNullOrEmpty()){
+                tarefaEntity.imagem = ""
+                /*if(temErro){
+                    msg.append(" / ")
+                }
+                msg.append("Foto")
+                temErro = true*/
             }
 
             if(temErro){

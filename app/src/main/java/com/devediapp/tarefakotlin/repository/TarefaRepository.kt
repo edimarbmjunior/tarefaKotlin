@@ -84,7 +84,9 @@ class TarefaRepository private constructor(context: Context){
                         DataBaseContants.TAREFA.COLUMNS.FK_PRIORIDADE_ID,
                         DataBaseContants.TAREFA.COLUMNS.DESCRICAO,
                         DataBaseContants.TAREFA.COLUMNS.DATA_VENCIMENTO,
-                        DataBaseContants.TAREFA.COLUMNS.STATUS)
+                        DataBaseContants.TAREFA.COLUMNS.STATUS,
+                        DataBaseContants.TAREFA.COLUMNS.IMAGEM
+                )
 
             val selection = "${DataBaseContants.TAREFA.COLUMNS.ID} = ?"
             val selectionArgs = arrayOf(id.toString())
@@ -98,11 +100,17 @@ class TarefaRepository private constructor(context: Context){
                 val descricao = cursor.getString(cursor.getColumnIndex(DataBaseContants.TAREFA.COLUMNS.DESCRICAO))
                 val dataVencimento = cursor.getString(cursor.getColumnIndex(DataBaseContants.TAREFA.COLUMNS.DATA_VENCIMENTO))
                 val status = UtilGenerico.getBooleanUmIsTrue(cursor.getInt(cursor.getColumnIndex(DataBaseContants.TAREFA.COLUMNS.STATUS)))
+                var imagemTeste = cursor.getString(cursor.getColumnIndex(DataBaseContants.TAREFA.COLUMNS.IMAGEM))
+                var imagemTarefa : String = ""
+                if(imagemTeste != null && imagemTeste.length > 0){
+                    imagemTarefa = imagemTeste
+                }
 
-                mTarefaEntity = TarefaEntity(id, fkIdUser, fkIdPrioridade, descricao, dataVencimento, status)
+                mTarefaEntity = TarefaEntity(id, fkIdUser, fkIdPrioridade, descricao, dataVencimento, status, imagemTarefa)
             }
             cursor.close()
         }catch (e: Exception){
+            println("Error: >${e}")
             throw e
         }
 
@@ -121,6 +129,10 @@ class TarefaRepository private constructor(context: Context){
         insertValues.put(DataBaseContants.TAREFA.COLUMNS.FK_PRIORIDADE_ID, tarefa.fkIdPrioridade)
         insertValues.put(DataBaseContants.TAREFA.COLUMNS.STATUS, UtilGenerico.getBooleanTrueIsUm(tarefa.status))
         insertValues.put(DataBaseContants.TAREFA.COLUMNS.DATA_VENCIMENTO,  tarefa.dataVencimento)
+        insertValues.put(DataBaseContants.TAREFA.COLUMNS.DATA_VENCIMENTO,  tarefa.dataVencimento)
+        if(tarefa.imagem.count() > 0){
+            insertValues.put(DataBaseContants.TAREFA.COLUMNS.IMAGEM,  tarefa.imagem)
+        }
         try {
             //db.insert(DataBaseContants.TAREFA.TABLE_NAME, null, insertValues)
             return db.insert(DataBaseContants.TAREFA.TABLE_NAME, null, insertValues).toInt()
@@ -141,6 +153,9 @@ class TarefaRepository private constructor(context: Context){
         updateValues.put(DataBaseContants.TAREFA.COLUMNS.FK_PRIORIDADE_ID, tarefa.fkIdPrioridade)
         updateValues.put(DataBaseContants.TAREFA.COLUMNS.STATUS, UtilGenerico.getBooleanTrueIsUm(tarefa.status))
         updateValues.put(DataBaseContants.TAREFA.COLUMNS.DATA_VENCIMENTO,  tarefa.dataVencimento)
+        if(tarefa.imagem.count() > 0){
+            updateValues.put(DataBaseContants.TAREFA.COLUMNS.IMAGEM,  tarefa.imagem)
+        }
 
         val selection = "${DataBaseContants.TAREFA.COLUMNS.ID} = ?"
         val selectionArgs = arrayOf(tarefa.id.toString())

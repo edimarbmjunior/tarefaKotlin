@@ -1,5 +1,7 @@
 package com.devediapp.tarefakotlin.views
 
+import android.app.Dialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
@@ -10,6 +12,7 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
+import android.view.View
 import android.widget.TextView
 import com.devediapp.tarefakotlin.R
 import com.devediapp.tarefakotlin.business.PrioridadeBusiness

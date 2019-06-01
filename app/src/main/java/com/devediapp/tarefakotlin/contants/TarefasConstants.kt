@@ -18,4 +18,8 @@ class TarefasConstants {
     object BUNDLE{
         val TAREFAID = "filtroTarefaId"
     }
+
+    object TAREFA{
+        val GALERIA_IMAGES = 1
+    }
 }

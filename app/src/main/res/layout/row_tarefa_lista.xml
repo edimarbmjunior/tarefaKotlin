@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="wrap_content"
+                xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_gravity="center_horizontal"
               android:padding="2mm">
@@ -9,7 +9,7 @@
             android:id="@+id/imageRowLista"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_nao_concluido"
+            app:srcCompat="@drawable/ic_nao_concluido"
             android:layout_centerVertical="true"
     />
 
@@ -31,6 +31,16 @@
             android:layout_toRightOf="@+id/imageRowLista"
             android:layout_marginLeft="2mm"
             android:layout_below="@+id/textRowListaDescricao"
+    />
+
+    <TextView
+            android:id="@+id/textRowListaImagem"
+            android:layout_width="44dp"
+            android:layout_height="20dp"
+            android:layout_below="@+id/textRowListaDescricao"
+            android:layout_marginTop="1.5mm"
+            android:layout_centerHorizontal="true"
+            android:text="Ver foto"
     />
 
     <TextView

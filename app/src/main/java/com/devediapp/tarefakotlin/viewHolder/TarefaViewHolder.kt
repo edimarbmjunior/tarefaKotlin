@@ -18,11 +18,13 @@ class TarefaViewHolder(itemView: View, val mContext: Context,  val listenerFragm
     private val mPrioridade : TextView = itemView.findViewById(R.id.textRowListaPrioridade)
     private val mImagemStatus : ImageView = itemView.findViewById(R.id.imageRowLista)
     private val mDataVencimento : TextView = itemView.findViewById(R.id.textRowListaDataVencimento)
+    private val mFoto : TextView = itemView.findViewById(R.id.textRowListaImagem)
 
     fun bindDados(tarefa: TarefaEntity){
         mDescricao.text = tarefa.descricao
         mPrioridade.text = PrioridadeCacheConstantes.getPrioridadeDescricao(tarefa.fkIdPrioridade)
         mDataVencimento.text = tarefa.dataVencimento
+        mFoto.text = "Foto da tarefa ${tarefa.id}"
 
         if(tarefa.status){
             mImagemStatus.setImageResource(R.drawable.ic_concluido)
@@ -51,6 +53,10 @@ class TarefaViewHolder(itemView: View, val mContext: Context,  val listenerFragm
             }else{
                 listenerFragment.onStatusCompletoClick(tarefa.id)
             }
+        }
+
+        mFoto.setOnClickListener{
+            listenerFragment.OnPopUpImagem(tarefa.id)
         }
     }
 

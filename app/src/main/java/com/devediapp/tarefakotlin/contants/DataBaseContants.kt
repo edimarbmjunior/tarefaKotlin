@@ -32,6 +32,7 @@ class DataBaseContants {
             val DESCRICAO = "descricao"
             val STATUS = "status"
             val DATA_VENCIMENTO = "dataVencimento"
+            val IMAGEM = "fotoImagem"
         }
     }
 }

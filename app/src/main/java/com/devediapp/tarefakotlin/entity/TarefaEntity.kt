@@ -5,4 +5,5 @@ data class TarefaEntity(var id: Int,
                         val fkIdPrioridade: Int,
                         var descricao: String,
                         var dataVencimento: String,
-                        var status: Boolean)
+                        var status: Boolean,
+                        var imagem: String = "")

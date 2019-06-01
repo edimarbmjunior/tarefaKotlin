@@ -34,4 +34,6 @@
     <string name="atualizar_tarefa">Atualizar tarefa</string>
     <string name="email_nao_valido">E-mail não é válido.</string>
     <string name="senha_mais_5_caracteres">A senha deve possuir mais de 5 caracteres!</string>
+    <string name="nao_imagem">Não possue Imagem!</string>
+    <string name="problema_imagem_generico">Problema não recuperação da imagem!</string>
 </resources>
